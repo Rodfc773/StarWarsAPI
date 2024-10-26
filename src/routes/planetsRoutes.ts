@@ -1,9 +1,12 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
+
+import { PlanetController } from '../controllers/planetController';
+
+const planetController = new PlanetController();
 
 const planetRouter = Router();
 
-planetRouter.get('/', (req: Request, res: Response) => {
-  res.send('olá');
-});
+planetRouter.get('/', planetController.index.bind(planetController));
+planetRouter.post('/', planetController.post.bind(planetController));
 
 export default planetRouter;
