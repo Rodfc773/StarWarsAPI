@@ -10,3 +10,10 @@ export class PlanetMissingDataError extends Error {
     this.name = 'PlanetMissingDataError';
   }
 }
+
+export class PlanetNotFound extends Error {
+  constructor(public message: string) {
+    super(message);
+    this.name = 'PlanetNotFound';
+  }
+}

@@ -32,4 +32,23 @@ describe('Planet API Integration Tests', () => {
     expect(response.status).toBe(201);
     expect(response.body).toEqual(expect.objectContaining(planetDataSut));
   });
+
+  it('Should find a planet in the database', async () => {
+    const sutTest = await prisma.planet.create({
+      data: {
+        name: 'Jarilo-IV',
+        terrain: 'Rock Hard',
+        size: 'Big',
+        population: 32000,
+        weather: 'Rainy',
+      },
+    });
+
+    const response = await request('http://localhost:3000').get(
+      `/planets/${sutTest.name}`,
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(expect.objectContaining(sutTest));
+  });
 });

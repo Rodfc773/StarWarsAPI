@@ -2,7 +2,11 @@ import { PrismaClient } from '@prisma/client';
 import { Request, Response } from 'express';
 
 import { Planet } from '../models/Planet';
-import { DataBaseError, PlanetMissingDataError } from '../utils/Errors';
+import {
+  DataBaseError,
+  PlanetMissingDataError,
+  PlanetNotFound,
+} from '../utils/Errors';
 import { ValidationPlanetData } from '../utils/Validations';
 
 const prisma = new PrismaClient();
@@ -52,6 +56,25 @@ export class PlanetController {
       return res
         .status(500)
         .json(new DataBaseError('Unable to create the new planet'));
+    }
+  }
+
+  async show(req, res) {
+    const { name } = req.params;
+
+    try {
+      const planet = await prisma.planet.findUnique({
+        where: {
+          name: name,
+        },
+      });
+
+      if (!planet) throw new PlanetNotFound('That planet name do not exist');
+    } catch (e) {
+      console.log(e);
+      return res
+        .status(500)
+        .json(new DataBaseError('Unable to operate in the data base'));
     }
   }
 }
