@@ -21,3 +21,6 @@
   - **POST :outbox_tray: /planets** : Create a new planet
 
   - **GET :inbox_tray: /planets** : Lists all planets registered.
+  - **GET :inbox_tray: /planets/PlanetName** : List a specific planet
+
+  - **DELETE :x: /planets/PlanetName**: Delete one specific planet
