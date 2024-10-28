@@ -55,7 +55,11 @@ export class PlanetController {
       console.log(error);
       return res
         .status(500)
-        .json(new DataBaseError('Unable to create the new planet'));
+        .json(
+          new DataBaseError(
+            'Unable to create the new planet because other planet with the same name is already registred',
+          ),
+        );
     }
   }
 
@@ -77,6 +81,24 @@ export class PlanetController {
       return res
         .status(500)
         .json(new DataBaseError('Unable to operate in the data base'));
+    }
+  }
+  async delete(req: Request, res: Response) {
+    const { name } = req.params;
+
+    try {
+      const deletedPlanet = await prisma.planet.delete({
+        where: { name: name },
+      });
+
+      return res
+        .status(200)
+        .json({ msg: 'Planet deleted with successful', planet: deletedPlanet });
+    } catch (error) {
+      console.log(error);
+      return res
+        .status(500)
+        .json(new DataBaseError('It was unable to deleted this planet'));
     }
   }
 }
