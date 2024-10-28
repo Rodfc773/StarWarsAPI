@@ -6,6 +6,16 @@ const prisma = new PrismaClient();
 
 const app = new App().app;
 
+const createPlanetSut = () => {
+  return {
+    name: `Jarilo-IV-${Date.now()}`,
+    terrain: 'Rock Hard',
+    size: 'Big',
+    population: 33000,
+    weather: 'Rainy',
+  };
+};
+
 describe('Planet API Integration Tests', () => {
   afterAll(async () => {
     await prisma.$disconnect();
@@ -18,13 +28,7 @@ describe('Planet API Integration Tests', () => {
   });
 
   it('Should create a new planet and return his data', async () => {
-    const planetDataSut = {
-      name: `Jarilo-IV-${Date.now()}`,
-      terrain: 'Rock Hard',
-      size: 'Big',
-      population: 33000,
-      weather: 'Rainy',
-    };
+    const planetDataSut = createPlanetSut();
 
     const response = await request(app).post('/planets').send(planetDataSut);
     await prisma.planet.delete({ where: { name: planetDataSut.name } });
@@ -34,20 +38,27 @@ describe('Planet API Integration Tests', () => {
   });
 
   it('Should find a planet in the database', async () => {
-    const planetDataSut = await prisma.planet.create({
-      data: {
-        name: `Jarilo-VI-${Date.now()}`,
-        terrain: 'Rock Hard',
-        size: 'Big',
-        population: 32000,
-        weather: 'Rainy',
-      },
-    });
+    const planetDataSut = createPlanetSut();
+
+    await request(app).post('/planets').send(planetDataSut);
 
     const response = await request(app).get(`/planets/${planetDataSut.name}`);
     await prisma.planet.delete({ where: { name: planetDataSut.name } });
 
     expect(response.status).toBe(200);
     expect(response.body.name).toEqual(planetDataSut.name);
+  });
+
+  it('Should to delete a espefic planet', async () => {
+    const planetDataSut = createPlanetSut();
+
+    await request(app).post('/planets').send(planetDataSut);
+
+    const response = await request(app).delete(
+      `/planets/${planetDataSut.name}`,
+    );
+
+    expect(response.status).toBe(200);
+    expect(response.body.planet.name).toEqual(planetDataSut.name);
   });
 });
