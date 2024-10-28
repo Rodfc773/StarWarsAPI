@@ -16,6 +16,15 @@ const createPlanetSut = () => {
   };
 };
 
+const createPlanetUpdated = () => {
+  return {
+    name: `Jarilo-V-${Date.now()}`,
+    terrain: 'Plain',
+    size: 'Big',
+    population: 100000,
+    weather: 'Rainy',
+  };
+};
 describe('Planet API Integration Tests', () => {
   afterAll(async () => {
     await prisma.$disconnect();
@@ -60,5 +69,22 @@ describe('Planet API Integration Tests', () => {
 
     expect(response.status).toBe(200);
     expect(response.body.planet.name).toEqual(planetDataSut.name);
+  });
+
+  it('Shoul update the informations about a specifc planet', async () => {
+    const planetDataSut = createPlanetSut();
+
+    await request(app).post('/planets').send(planetDataSut);
+
+    const dataTobeUpdate = createPlanetUpdated();
+
+    const response = await request(app)
+      .patch(`/planets/${planetDataSut.name}`)
+      .send(dataTobeUpdate);
+
+    await prisma.planet.delete({ where: { name: dataTobeUpdate.name } });
+
+    expect(response.status).toBe(200);
+    expect(response.body.name).toEqual(dataTobeUpdate.name);
   });
 });
