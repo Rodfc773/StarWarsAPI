@@ -8,29 +8,29 @@ import planetRouter from './routes/planetsRoutes';
 
 import 'dotenv/config';
 
-class App {
-  private app: Application;
+export class App {
+  private _app: Application;
   private _port: string;
 
   constructor() {
-    this.app = express();
+    this._app = express();
     this._port = process.env.APP_PORT;
     this.middlewares();
     this.routes();
   }
 
   private middlewares() {
-    this.app.use(express.urlencoded({ extended: true }));
-    this.app.use(express.json());
-    this.app.use(helmet());
-    this.app.use(cors());
+    this._app.use(express.urlencoded({ extended: true }));
+    this._app.use(express.json());
+    this._app.use(helmet());
+    this._app.use(cors());
   }
 
   private routes() {
-    this.app.use('/planets', planetRouter);
+    this._app.use('/planets', planetRouter);
   }
   run() {
-    this.app.listen(this.port, () => {
+    this._app.listen(this.port, () => {
       console.log(
         `A API está rodando no endereço: http://localhost:${this.port}`,
       );
@@ -40,6 +40,7 @@ class App {
   get port(): string {
     return this._port;
   }
+  get app(): Application {
+    return this._app;
+  }
 }
-
-export default new App();
