@@ -1,10 +1,10 @@
 import { Planet } from 'src/models/Planet';
 
-export abstract class Validation {
+export abstract class Validator {
   abstract validationData(data): boolean;
 }
 
-export class ValidationPlanetData extends Validation {
+export class PlanetDataValidator extends Validator {
   validationData(data: Planet): boolean {
     if (!data.name) return false;
     if (!data.terrain) return false;
