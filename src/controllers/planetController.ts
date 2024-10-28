@@ -1,104 +1,70 @@
-import { PrismaClient } from '@prisma/client';
 import { Request, Response } from 'express';
 
 import { Planet } from '../models/Planet';
-import {
-  DataBaseError,
-  PlanetMissingDataError,
-  PlanetNotFound,
-} from '../utils/Errors';
-import { ValidationPlanetData } from '../utils/Validations';
-
-const prisma = new PrismaClient();
+import { PlanetService } from '../services/PlanetService';
 
 export class PlanetController {
+  private service = new PlanetService();
   async index(req: Request, res: Response) {
     try {
-      const planets = await prisma.planet.findMany();
+      const planets = await this.service.getAll();
 
-      return res.json(planets);
+      return res.status(200).json(planets);
     } catch (e) {
-      console.log(e);
-      return res
-        .status(500)
-        .json(new DataBaseError('Unable to access the DataBase'));
+      return res.status(500).json({ message: e.message });
     }
   }
   async post(req: Request, res: Response) {
-    const { name, terrain, size, population, weather } = req.body;
+    const planetData = req.body;
 
     try {
-      const planetData = new Planet(name, terrain, size, population, weather);
-      const validatorData = new ValidationPlanetData();
-
-      if (!validatorData.validationData(planetData)) {
-        return res
-          .status(400)
-          .json(
-            new PlanetMissingDataError(
-              "Some data of the new planet is missing or it's null",
-            ),
-          );
-      }
-      const newPlanet = await prisma.planet.create({
-        data: {
-          name: planetData.name,
-          terrain: planetData.terrain,
-          size: planetData.size,
-          population: planetData.population,
-          weather: planetData.weather,
-        },
-      });
+      const newPlanet = await this.service.createOne(planetData);
 
       return res.status(201).json(newPlanet);
     } catch (error) {
-      console.log(error);
-      return res
-        .status(500)
-        .json(
-          new DataBaseError(
-            'Unable to create the new planet because other planet with the same name is already registred',
-          ),
-        );
+      return res.status(500).json({ message: error.message });
     }
   }
 
   async show(req, res) {
-    const { name } = req.params;
-
     try {
-      const planet = await prisma.planet.findUnique({
-        where: {
-          name: name,
-        },
-      });
-
-      if (!planet) throw new PlanetNotFound('That planet name do not exist');
-
-      return res.json(planet);
+      const planet = await this.service.findOne(req.params.name);
+      return res.status(200).json(planet);
     } catch (e) {
-      console.log(e);
-      return res
-        .status(500)
-        .json(new DataBaseError('Unable to operate in the data base'));
+      return res.status(500).json(e.message);
     }
   }
   async delete(req: Request, res: Response) {
-    const { name } = req.params;
-
     try {
-      const deletedPlanet = await prisma.planet.delete({
-        where: { name: name },
-      });
+      const deletedPlanet = await this.service.deleteOne(req.params.name);
 
       return res
         .status(200)
         .json({ msg: 'Planet deleted with successful', planet: deletedPlanet });
     } catch (error) {
-      console.log(error);
-      return res
-        .status(500)
-        .json(new DataBaseError('It was unable to deleted this planet'));
+      return res.status(500).json({ message: error.message });
+    }
+  }
+  async put(req, res) {
+    const dataToBeUpdated = req.body;
+
+    const planetToBeUpdated = new Planet(
+      dataToBeUpdated.name,
+      dataToBeUpdated.terrain,
+      dataToBeUpdated.size,
+      dataToBeUpdated.population,
+      dataToBeUpdated.weather,
+    );
+
+    try {
+      const planetUpdated = await this.service.updateOne(
+        req.params.name,
+        planetToBeUpdated,
+      );
+
+      return res.status(200).json(planetUpdated);
+    } catch (error) {
+      return res.status(500).json(error.message);
     }
   }
 }
