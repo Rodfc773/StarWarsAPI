@@ -13,4 +13,6 @@ planetRouter.post('/', planetController.post.bind(planetController));
 
 planetRouter.delete('/:name', planetController.delete.bind(planetController));
 
+planetRouter.patch('/:name', planetController.put.bind(planetController));
+
 export default planetRouter;
