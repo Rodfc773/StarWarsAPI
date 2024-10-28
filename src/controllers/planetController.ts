@@ -70,6 +70,8 @@ export class PlanetController {
       });
 
       if (!planet) throw new PlanetNotFound('That planet name do not exist');
+
+      return res.json(planet);
     } catch (e) {
       console.log(e);
       return res
