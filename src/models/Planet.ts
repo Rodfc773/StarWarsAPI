@@ -4,12 +4,12 @@ export class Planet {
   constructor(
     public name: string,
     public terrain: string,
-    public size: PlanetSize,
+    public size: string,
     public population: number,
     public weather: string,
   ) {}
 
-  toJson(): object {
+  toJson() {
     return {
       name: this.name,
       terrain: this.terrain,
