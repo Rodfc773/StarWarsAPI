@@ -14,12 +14,23 @@ datasource db {
 }
 
 model Planet {
-  id         String   @id @default(cuid())
-  name       String   @unique
-  terrain    String   @db.Text
-  size       String
-  population Int
-  weather    String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id           String     @id @default(uuid())
+  name         String     @unique
+  terrain      String     @db.Text
+  size         String
+  population   Int
+  weather      String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  StarSystem   StarSystem @relation(fields: [starSystemId], references: [id])
+  starSystemId String
+}
+
+model StarSystem {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String   @db.Text
+  planets     Planet[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
