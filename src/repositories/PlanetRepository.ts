@@ -35,7 +35,17 @@ export class PlanetRepository implements Repository<Planet> {
     );
   }
   async create(data: Planet): Promise<Planet> {
-    const dataFromDB = await prisma.planet.create({ data: data });
+    const { name, terrain, population, size, weather } = data;
+
+    const dataFromDB = await prisma.planet.create({
+      data: {
+        name: name,
+        terrain: terrain,
+        size: size,
+        population: population,
+        weather: weather,
+      },
+    });
 
     return new Planet(
       dataFromDB.name,
