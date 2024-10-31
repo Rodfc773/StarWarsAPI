@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import 'dotenv/config';
 
 import planetRouter from './routes/planetsRoutes';
+import starSystemRouter from './routes/starSystemRoutes';
 
 import 'dotenv/config';
 
@@ -28,6 +29,7 @@ export class App {
 
   private routes() {
     this._app.use('/planets', planetRouter);
+    this._app.use('/starsystem', starSystemRouter);
   }
   run() {
     this._app.listen(this.port, () => {
