@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
 
 import { Planet } from '../models/Planet';
-import { PlanetService } from '../services/PlanetService';
+import { Service } from 'src/services/interfaces/Service';
 
 export class PlanetController {
-  private service = new PlanetService();
+  constructor(private service: Service<Planet>) {}
+
   async index(req: Request, res: Response) {
     try {
       const planets = await this.service.getAll();

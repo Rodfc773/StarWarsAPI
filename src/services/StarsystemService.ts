@@ -8,7 +8,7 @@ export class StarSystemService extends Service<StarSystem> {
   repository: Repository<StarSystem>;
   validator: Validator;
 
-  constructor(repo, validator) {
+  constructor(repo: Repository<StarSystem>, validator: Validator) {
     super();
     this.repository = repo;
     this.validator = validator;

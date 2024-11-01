@@ -1,12 +1,18 @@
+import { Repository } from 'src/repositories/interface/Repository';
 import { Planet } from '../models/Planet';
-import { PlanetRepository } from '../repositories/PlanetRepository';
 import { DataBaseError, PlanetMissingDataError } from '../utils/Errors';
-import { PlanetDataValidator } from '../utils/Validations';
 import { Service } from './interfaces/Service';
+import { Validator } from 'src/utils/Validations';
 
 export class PlanetService extends Service<Planet> {
-  repository = new PlanetRepository();
-  validator = new PlanetDataValidator();
+  repository: Repository<Planet>;
+  validator: Validator;
+
+  constructor(repo: Repository<Planet>, val: Validator) {
+    super();
+    this.repository = repo;
+    this.validator = val;
+  }
 
   async getAll(): Promise<Planet[]> {
     return await this.repository.findall();
