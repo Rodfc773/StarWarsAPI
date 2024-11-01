@@ -17,3 +17,17 @@ export class PlanetNotFound extends Error {
     this.name = 'PlanetNotFound';
   }
 }
+
+export class StarSystemMissingDataError extends Error {
+  constructor(public message) {
+    super(message);
+    this.name = 'StarSystemMissingData';
+  }
+}
+
+export class StarSystemNotFound extends Error {
+  constructor(public message) {
+    super(message);
+    this.name = 'StarSystemNotFound';
+  }
+}

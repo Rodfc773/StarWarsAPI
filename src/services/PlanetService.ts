@@ -34,6 +34,6 @@ export class PlanetService extends Service<Planet> {
     return await this.repository.update(data, name);
   }
   async deleteOne(name: string): Promise<Planet> {
-    return this.repository.delete(name);
+    return await this.repository.delete(name);
   }
 }
