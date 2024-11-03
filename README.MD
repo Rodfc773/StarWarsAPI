@@ -16,11 +16,17 @@
 
 ## Endpoints
 
-- Planets
+- **Planets**:
+
+  - **Attributes**: Name, terrain, size, population and weather.
 
   - **POST :outbox_tray: /planets** : Create a new planet
 
   - **GET :inbox_tray: /planets** : Lists all planets registered.
-  - **GET :inbox_tray: /planets/PlanetName** : List a specific planet
+  - **GET :inbox_tray: /planets/name** : List a specific planet
 
-  - **DELETE :x: /planets/PlanetName**: Delete one specific planet
+  - **DELETE :x: /planets/name**: Delete one specific planet
+
+  - **PATCH/PUT :arrows_counterclockwise: /planets/name:** Updates the information about a specific planet.
+
+  **Obs:** For now it's only be possible to update a planet if the user provide the full data of a planet i.e Name, terraim, size, population and weather
