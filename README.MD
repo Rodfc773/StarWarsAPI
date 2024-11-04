@@ -20,13 +20,30 @@
 
   - **Attributes**: Name, terrain, size, population and weather.
 
-  - **POST :outbox_tray: /planets** : Create a new planet
-
   - **GET :inbox_tray: /planets** : Lists all planets registered.
-  - **GET :inbox_tray: /planets/name** : List a specific planet
 
-  - **DELETE :x: /planets/name**: Delete one specific planet
+  - **GET :inbox_tray: /planets/name** : List a specific planet.
+
+  - **POST :outbox_tray: /planets** : Create a new planet.
+
+  - **DELETE :x: /planets/name**: Delete one specific planet.
 
   - **PATCH/PUT :arrows_counterclockwise: /planets/name:** Updates the information about a specific planet.
 
-  **Obs:** For now it's only be possible to update a planet if the user provide the full data of a planet i.e Name, terraim, size, population and weather
+  **Obs:** For now it's only be possible to update a planet if the user provide the full data of a planet i.e Name, terraim, size, population and weather.
+
+- **Star Systems**:
+
+  - **Atributtes**: Name and Description
+
+  - **GET :inbox_tray: /starsystem**: Lists all Star Systems registered.
+
+  - **GET :inbox_tray: /starsystem/name** : List a specific Star System.
+
+  - **POST :outbox_tray: /starsystem** : Create a new Star System.
+
+  - **DELETE :x: /planets/name**: Delete one specific Star System.
+
+  - **PATCH/PUT :arrows_counterclockwise: /starsystem/name:** Updates the information about a specific Star System.
+
+    **Obs:** For now it's only be possible to update a Star System if the user provide the full data i.e Name and Description.
