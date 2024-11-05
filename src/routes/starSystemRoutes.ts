@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { StarSystemController } from 'src/controllers/starSystemController';
-import { StarSystemRepository } from 'src/repositories/StarSystemRepository';
-import { StarSystemService } from 'src/services/StarsystemService';
-import { StarSystemValidator } from 'src/utils/Validations';
+import { StarSystemController } from '../controllers/starSystemController';
+import { StarSystemRepository } from '../repositories/StarSystemRepository';
+import { StarSystemService } from '../services/StarsystemService';
+import { StarSystemValidator } from '../utils/Validations';
 
 const router = Router();
 

@@ -1,8 +1,8 @@
-import { StarSystem } from 'src/models/Starsystem';
+import { StarSystem } from '../models/Starsystem';
 import { Service } from './interfaces/Service';
-import { Repository } from 'src/repositories/interface/Repository';
-import { Validator } from 'src/utils/Validations';
-import { DataBaseError, StarSystemMissingDataError } from 'src/utils/Errors';
+import { Repository } from '../repositories/interface/Repository';
+import { Validator } from '../utils/Validations';
+import { DataBaseError, StarSystemMissingDataError } from '../utils/Errors';
 
 export class StarSystemService extends Service<StarSystem> {
   repository: Repository<StarSystem>;

@@ -1,8 +1,8 @@
-import { Repository } from 'src/repositories/interface/Repository';
+import { Repository } from '../repositories/interface/Repository';
 import { Planet } from '../models/Planet';
 import { DataBaseError, PlanetMissingDataError } from '../utils/Errors';
 import { Service } from './interfaces/Service';
-import { Validator } from 'src/utils/Validations';
+import { Validator } from '../utils/Validations';
 
 export class PlanetService extends Service<Planet> {
   repository: Repository<Planet>;

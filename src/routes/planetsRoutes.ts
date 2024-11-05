@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
 import { PlanetController } from '../controllers/planetController';
-import { PlanetRepository } from 'src/repositories/PlanetRepository';
-import { PlanetDataValidator } from 'src/utils/Validations';
-import { PlanetService } from 'src/services/PlanetService';
+import { PlanetRepository } from '../repositories/PlanetRepository';
+import { PlanetDataValidator } from '../utils/Validations';
+import { PlanetService } from '../services/PlanetService';
 
 const repository = new PlanetRepository();
 const validador = new PlanetDataValidator();

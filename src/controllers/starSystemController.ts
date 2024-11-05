@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
 
-import { StarSystem } from 'src/models/Starsystem';
-import { Service } from 'src/services/interfaces/Service';
+import { StarSystem } from '../models/Starsystem';
+import { Service } from '../services/interfaces/Service';
 
 export class StarSystemController {
   constructor(private service: Service<StarSystem>) {}
-
   async index(req: Request, res: Response): Promise<Response> {
     try {
       const StarSystems: StarSystem[] = await this.service.getAll();
