@@ -1,13 +1,6 @@
 export class StarSystem {
   constructor(
-    private _name: string,
-    private _description: string,
+    public name: string,
+    public description: string,
   ) {}
-
-  get name(): Readonly<string> {
-    return this._name;
-  }
-  get description(): Readonly<string> {
-    return this._description;
-  }
 }
