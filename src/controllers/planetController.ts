@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 
-import { Planet } from '../models/Planet';
+import { PlanetDTO } from '../DTOS/Planet';
 import { Service } from 'src/services/interfaces/Service';
 
 export class PlanetController {
-  constructor(private service: Service<Planet>) {}
+  constructor(private service: Service<PlanetDTO>) {}
 
   async index(req: Request, res: Response) {
     try {
@@ -30,7 +30,7 @@ export class PlanetController {
   async show(req, res) {
     try {
       const planet = await this.service.findOne(req.params.name);
-      return res.status(200).json(planet);
+      return res.status(200).json(planet.toObject());
     } catch (e) {
       return res.status(500).json(e.message);
     }
@@ -39,9 +39,10 @@ export class PlanetController {
     try {
       const deletedPlanet = await this.service.deleteOne(req.params.name);
 
-      return res
-        .status(200)
-        .json({ msg: 'Planet deleted with successful', planet: deletedPlanet });
+      return res.status(200).json({
+        msg: 'Planet deleted with successful',
+        planet: deletedPlanet.toObject(),
+      });
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }
@@ -49,13 +50,7 @@ export class PlanetController {
   async put(req, res) {
     const dataToBeUpdated = req.body;
 
-    const planetToBeUpdated = new Planet(
-      dataToBeUpdated.name,
-      dataToBeUpdated.terrain,
-      dataToBeUpdated.size,
-      dataToBeUpdated.population,
-      dataToBeUpdated.weather,
-    );
+    const planetToBeUpdated = new PlanetDTO(dataToBeUpdated);
 
     try {
       const planetUpdated = await this.service.updateOne(
@@ -63,7 +58,7 @@ export class PlanetController {
         planetToBeUpdated,
       );
 
-      return res.status(200).json(planetUpdated);
+      return res.status(200).json(planetUpdated.toObject());
     } catch (error) {
       return res.status(500).json(error.message);
     }

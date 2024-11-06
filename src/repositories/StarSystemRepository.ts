@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 
 import { Repository } from './interface/Repository';
-import { StarSystem } from '../models/Starsystem';
+import { StarSystem } from '../DTOS/Starsystem';
 
 const prisma = new PrismaClient();
 
@@ -10,7 +10,7 @@ export class StarSystemRepository implements Repository<StarSystem> {
     const dataFromDB = await prisma.starSystem.findMany();
 
     const starSystems = dataFromDB.map(
-      (systemData) => new StarSystem(systemData.name, systemData.description),
+      (systemData) => new StarSystem(systemData),
     );
 
     return starSystems;
@@ -20,14 +20,14 @@ export class StarSystemRepository implements Repository<StarSystem> {
       where: { name: name },
     });
 
-    return new StarSystem(dataFromDB.name, dataFromDB.description);
+    return new StarSystem(dataFromDB);
   }
   async create(data: StarSystem): Promise<StarSystem> {
     const newPlanet = await prisma.starSystem.create({
       data: { name: data.name, description: data.description },
     });
 
-    return new StarSystem(newPlanet.name, newPlanet.description);
+    return new StarSystem(newPlanet);
   }
   async update(data: StarSystem, StarSystemName: string): Promise<StarSystem> {
     const updatedStarSystemData = await prisma.starSystem.update({
@@ -35,16 +35,13 @@ export class StarSystemRepository implements Repository<StarSystem> {
       data: { name: data.name, description: data.description },
     });
 
-    return new StarSystem(
-      updatedStarSystemData.name,
-      updatedStarSystemData.description,
-    );
+    return new StarSystem(updatedStarSystemData);
   }
   async delete(name: string): Promise<StarSystem> {
     const deletedSystem = await prisma.starSystem.delete({
       where: { name: name },
     });
 
-    return new StarSystem(deletedSystem.name, deletedSystem.description);
+    return new StarSystem(deletedSystem);
   }
 }

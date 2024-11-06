@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { StarSystem } from '../models/Starsystem';
+import { StarSystem } from '../DTO's/Starsystem';
 import { Service } from '../services/interfaces/Service';
 
 export class StarSystemController {

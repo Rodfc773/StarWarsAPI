@@ -1,5 +1,5 @@
 import { StarSystem } from '@prisma/client';
-import { Planet } from 'src/models/Planet';
+import { Planet } from 'src/DTO's/Planet';
 
 export abstract class Validator {
   abstract validationData(data): boolean;

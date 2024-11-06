@@ -1,18 +1,26 @@
 import { PrismaClient } from '@prisma/client';
 
 import { Repository } from './interface/Repository';
-import { User } from 'src/models/User';
+import { UserDTO } from 'src/DTOS/User';
 
 const prisma = new PrismaClient();
-export class UserRepository implements Repository<User> {
-  async findOne(email: string): Promise<User> {
+export class UserDTORepository implements Repository<UserDTO> {
+  async findOne(email: string): Promise<UserDTO> {
     const user = await prisma.user.findUnique({
       where: { email: email },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        nickname: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
 
-    return new User(user.name, user.email, user.password, user.nickname);
+    return new UserDTO(user);
   }
-  async create(data: User): Promise<User> {
+  async create(data): Promise<UserDTO> {
     const newUser = await prisma.user.create({
       data: {
         name: data.name,
@@ -22,49 +30,26 @@ export class UserRepository implements Repository<User> {
       },
     });
 
-    return new User(
-      newUser.name,
-      newUser.email,
-      newUser.password,
-      newUser.nickname,
-    );
+    return new UserDTO(newUser);
   }
-  async update(data: User, userEmail: string): Promise<User> {
-    const userToBeUpdated = await prisma.user.update({
-      where: { email: userEmail },
+  async update(data: UserDTO, UserDTOEmail: string): Promise<UserDTO> {
+    const userUpdated = await prisma.user.update({
+      where: { email: UserDTOEmail },
       data: { name: data.name, email: data.email, nickname: data.nickname },
     });
 
-    return new User(
-      userToBeUpdated.name,
-      userToBeUpdated.email,
-      userToBeUpdated.password,
-      userToBeUpdated.nickname,
-    );
+    return new UserDTO(userUpdated);
   }
-  async delete(email: string): Promise<User> {
+  async delete(email: string): Promise<UserDTO> {
     const userDeleted = await prisma.user.delete({
       where: { email: email },
     });
 
-    return new User(
-      userDeleted.name,
-      userDeleted.email,
-      userDeleted.password,
-      userDeleted.nickname,
-    );
+    return new UserDTO(userDeleted);
   }
-  async findall(): Promise<User[]> {
+  async findall(): Promise<UserDTO[]> {
     const usersFromDb = await prisma.user.findMany();
 
-    return usersFromDb.map(
-      (userData) =>
-        new User(
-          userData.name,
-          userData.email,
-          userData.password,
-          userData.nickname,
-        ),
-    );
+    return usersFromDb.map((userFromDB) => new UserDTO(userFromDB));
   }
 }

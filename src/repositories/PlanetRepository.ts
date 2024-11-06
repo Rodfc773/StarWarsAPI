@@ -1,40 +1,25 @@
 import { PrismaClient } from '@prisma/client';
-import { Planet } from '../models/Planet';
+import { PlanetDTO } from '../DTOS/Planet';
 import { Repository } from './interface/Repository';
 
 const prisma = new PrismaClient();
 
-export class PlanetRepository implements Repository<Planet> {
-  async findall(): Promise<Planet[]> {
+export class PlanetRepository implements Repository<PlanetDTO> {
+  async findall(): Promise<PlanetDTO[]> {
     const dataFromDB = await prisma.planet.findMany();
 
-    const planets = dataFromDB.map(
-      (planetData) =>
-        new Planet(
-          planetData.name,
-          planetData.terrain,
-          planetData.size,
-          planetData.population,
-          planetData.weather,
-        ),
-    );
+    const planets = dataFromDB.map((planetData) => new PlanetDTO(planetData));
 
     return planets;
   }
-  async findOne(planetName: string): Promise<Planet> {
+  async findOne(planetName: string): Promise<PlanetDTO> {
     const dataFromDB = await prisma.planet.findUnique({
       where: { name: planetName },
     });
 
-    return new Planet(
-      dataFromDB.name,
-      dataFromDB.terrain,
-      dataFromDB.size,
-      dataFromDB.population,
-      dataFromDB.weather,
-    );
+    return new PlanetDTO(dataFromDB);
   }
-  async create(data: Planet): Promise<Planet> {
+  async create(data: PlanetDTO): Promise<PlanetDTO> {
     const { name, terrain, population, size, weather } = data;
 
     const dataFromDB = await prisma.planet.create({
@@ -47,38 +32,20 @@ export class PlanetRepository implements Repository<Planet> {
       },
     });
 
-    return new Planet(
-      dataFromDB.name,
-      dataFromDB.terrain,
-      dataFromDB.size,
-      dataFromDB.population,
-      dataFromDB.weather,
-    );
+    return new PlanetDTO(dataFromDB);
   }
-  async update(data: Planet, planetName: string): Promise<Planet> {
+  async update(data: PlanetDTO, planetName: string): Promise<PlanetDTO> {
     const dataFromDB = await prisma.planet.update({
       where: { name: planetName },
       data: data,
     });
 
-    return new Planet(
-      dataFromDB.name,
-      dataFromDB.terrain,
-      dataFromDB.size,
-      dataFromDB.population,
-      dataFromDB.weather,
-    );
+    return new PlanetDTO(dataFromDB);
   }
-  async delete(planetName: string): Promise<Planet> {
+  async delete(planetName: string): Promise<PlanetDTO> {
     const dataFromDB = await prisma.planet.delete({
       where: { name: planetName },
     });
-    return new Planet(
-      dataFromDB.name,
-      dataFromDB.terrain,
-      dataFromDB.size,
-      dataFromDB.population,
-      dataFromDB.weather,
-    );
+    return new PlanetDTO(dataFromDB);
   }
 }

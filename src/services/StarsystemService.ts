@@ -1,4 +1,4 @@
-import { StarSystem } from '../models/Starsystem';
+import { StarSystem } from '../DTOS/Starsystem';
 import { Service } from './interfaces/Service';
 import { Repository } from '../repositories/interface/Repository';
 import { Validator } from '../utils/Validations';
