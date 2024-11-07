@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 
 import { PlanetDTO } from '../DTOS/Planet';
-import { Service } from 'src/services/interfaces/Service';
+import { Service } from '../services/interfaces/Service';
+import { DataBaseError } from '../utils/Errors';
 
 export class PlanetController {
   constructor(private service: Service<PlanetDTO>) {}
@@ -21,15 +22,21 @@ export class PlanetController {
     try {
       const newPlanet = await this.service.createOne(planetData);
 
-      return res.status(201).json(newPlanet);
+      return res.status(201).json(newPlanet.toObject());
     } catch (error) {
-      return res.status(500).json({ message: error.message });
+      return res.status(500).json({ error_message: error.message });
     }
   }
 
   async show(req, res) {
     try {
       const planet = await this.service.findOne(req.params.name);
+
+      if (!planet) {
+        return res.status(404).json({
+          error_message: new DataBaseError('Planet not found').message,
+        });
+      }
       return res.status(200).json(planet.toObject());
     } catch (e) {
       return res.status(500).json(e.message);
@@ -38,6 +45,12 @@ export class PlanetController {
   async delete(req: Request, res: Response) {
     try {
       const deletedPlanet = await this.service.deleteOne(req.params.name);
+
+      if (!deletedPlanet) {
+        return res.status(404).json({
+          error_message: new DataBaseError('Planet not found').message,
+        });
+      }
 
       return res.status(200).json({
         msg: 'Planet deleted with successful',
@@ -57,6 +70,12 @@ export class PlanetController {
         req.params.name,
         planetToBeUpdated,
       );
+
+      if (!planetUpdated) {
+        return res.status(404).json({
+          error_message: new DataBaseError('Planet not found').message,
+        });
+      }
 
       return res.status(200).json(planetUpdated.toObject());
     } catch (error) {

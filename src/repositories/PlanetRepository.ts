@@ -20,16 +20,8 @@ export class PlanetRepository implements Repository<PlanetDTO> {
     return new PlanetDTO(dataFromDB);
   }
   async create(data: PlanetDTO): Promise<PlanetDTO> {
-    const { name, terrain, population, size, weather } = data;
-
     const dataFromDB = await prisma.planet.create({
-      data: {
-        name: name,
-        terrain: terrain,
-        size: size,
-        population: population,
-        weather: weather,
-      },
+      data: data,
     });
 
     return new PlanetDTO(dataFromDB);
