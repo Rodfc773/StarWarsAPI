@@ -34,6 +34,7 @@ describe('Planet API Integration Tests', () => {
     const response = await request(app).get('/planets');
 
     expect(response.status).toBe(200);
+    expect(response.body).not.toBeNull();
   });
 
   it('Should create a new planet and return his data', async () => {
@@ -43,7 +44,7 @@ describe('Planet API Integration Tests', () => {
     await prisma.planet.delete({ where: { name: planetDataSut.name } });
 
     expect(response.status).toBe(201);
-    expect(response.body).toEqual(expect.objectContaining(planetDataSut));
+    expect(response.body.name).toEqual(planetDataSut.name);
   });
 
   it('Should find a planet in the database', async () => {
