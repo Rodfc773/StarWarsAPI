@@ -4,7 +4,7 @@ import { Repository } from './interface/Repository';
 import { UserDTO } from 'src/dtos/User';
 
 const prisma = new PrismaClient();
-export class UserDTORepository implements Repository<UserDTO> {
+export class UserRepository implements Repository<UserDTO> {
   async findOne(nickname: string): Promise<UserDTO> {
     const user = await prisma.user.findUnique({
       where: { nickname: nickname },

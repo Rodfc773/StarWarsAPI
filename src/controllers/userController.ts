@@ -3,7 +3,7 @@ import { UserDTO } from '../dtos/User';
 import { Service } from '../services/interfaces/Service';
 import { encryptPassword } from '../utils/encryptPassword';
 
-export class userController {
+export class UserController {
   constructor(private service: Service<UserDTO>) {}
 
   async index(req: Request, res: Response): Promise<Response> {

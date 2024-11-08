@@ -6,6 +6,7 @@ import 'dotenv/config';
 
 import planetRouter from './routes/planetsRoutes';
 import starSystemRouter from './routes/starSystemRoutes';
+import userRouter from './routes/userRoute';
 
 import 'dotenv/config';
 
@@ -30,6 +31,7 @@ export class App {
   private routes() {
     this._app.use('/planets', planetRouter);
     this._app.use('/starsystem', starSystemRouter);
+    this._app.use('/users', userRouter);
   }
   run() {
     this._app.listen(this.port, () => {

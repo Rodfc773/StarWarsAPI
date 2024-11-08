@@ -25,6 +25,9 @@ export class UserService extends Service<UserDTO> {
     if (!this.validator.validationData(data))
       throw new UserMissingDataError("Some data's field are missing");
 
+    if (!this.validator.validateEmail(data.email))
+      throw new UserMissingDataError('Invalid email');
+
     return await this.repository.create(data);
   }
   async updateOne(name: string, data: UserDTO): Promise<UserDTO> {

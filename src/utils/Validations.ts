@@ -1,3 +1,5 @@
+import * as validator from 'validator';
+
 import { StarSystem } from '../dtos/Starsystem';
 import { PlanetDTO } from '../dtos/Planet';
 import { UserDTO } from '../dtos/User';
@@ -35,5 +37,9 @@ export class UserDataValidator extends Validator {
     if (!data.password) return false;
 
     return true;
+  }
+
+  validateEmail(email: string): boolean {
+    return validator.isEmail(email);
   }
 }
