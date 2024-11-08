@@ -5,9 +5,9 @@ import { UserDTO } from 'src/dtos/User';
 
 const prisma = new PrismaClient();
 export class UserDTORepository implements Repository<UserDTO> {
-  async findOne(email: string): Promise<UserDTO> {
+  async findOne(nickname: string): Promise<UserDTO> {
     const user = await prisma.user.findUnique({
-      where: { email: email },
+      where: { nickname: nickname },
       select: {
         id: true,
         name: true,
@@ -20,14 +20,9 @@ export class UserDTORepository implements Repository<UserDTO> {
 
     return new UserDTO(user);
   }
-  async create(data): Promise<UserDTO> {
+  async create(data: UserDTO): Promise<UserDTO> {
     const newUser = await prisma.user.create({
-      data: {
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        nickname: data.nickname,
-      },
+      data: data,
     });
 
     return new UserDTO(newUser);
@@ -35,7 +30,7 @@ export class UserDTORepository implements Repository<UserDTO> {
   async update(data: UserDTO, UserDTOEmail: string): Promise<UserDTO> {
     const userUpdated = await prisma.user.update({
       where: { email: UserDTOEmail },
-      data: { name: data.name, email: data.email, nickname: data.nickname },
+      data: data,
     });
 
     return new UserDTO(userUpdated);

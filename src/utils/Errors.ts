@@ -11,6 +11,13 @@ export class PlanetMissingDataError extends Error {
   }
 }
 
+export class UserMissingDataError extends Error {
+  constructor(public message: string) {
+    super(message);
+    this.name = 'UserMissingDataError';
+  }
+}
+
 export class PlanetNotFound extends Error {
   constructor(public message: string) {
     super(message);

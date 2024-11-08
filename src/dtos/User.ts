@@ -1,5 +1,3 @@
-import * as bcrypt from 'bcryptjs';
-
 export class UserDTO {
   private _id?: string;
   private _name: string;
@@ -22,17 +20,8 @@ export class UserDTO {
     this._name = user.name;
     this._email = user.email;
     this._nickname = user.nickname;
-    this.setPassword(user.password);
     this._createdAt = user.createdAt;
     this._updatedAt = user.updatedAt;
-  }
-
-  async setPassword(password: string): Promise<void> {
-    const hashedPassword = await bcrypt.hash(password, 11);
-    this._password = hashedPassword;
-  }
-  async verifyPassword(password: string): Promise<boolean> {
-    return bcrypt.compare(password, this._password);
   }
 
   toObject(): object {
@@ -46,6 +35,12 @@ export class UserDTO {
     };
   }
 
+  get password(): Readonly<string> {
+    return this._password;
+  }
+  set password(password: string) {
+    this._password = password;
+  }
   get name(): Readonly<string> {
     return this._name;
   }
