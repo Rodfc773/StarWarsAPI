@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { PlanetDTO } from '../DTOS/Planet';
+import { PlanetDTO } from '../dtos/Planet';
 import { Repository } from './interface/Repository';
 
 const prisma = new PrismaClient();

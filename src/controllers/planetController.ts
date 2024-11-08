@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { PlanetDTO } from '../DTOS/Planet';
+import { PlanetDTO } from '../dtos/Planet';
 import { Service } from '../services/interfaces/Service';
 import { DataBaseError } from '../utils/Errors';
 

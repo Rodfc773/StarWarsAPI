@@ -1,5 +1,5 @@
 import { Repository } from '../repositories/interface/Repository';
-import { PlanetDTO } from '../DTOS/Planet';
+import { PlanetDTO } from '../dtos/Planet';
 import { PlanetMissingDataError } from '../utils/Errors';
 import { Service } from './interfaces/Service';
 import { Validator } from '../utils/Validations';

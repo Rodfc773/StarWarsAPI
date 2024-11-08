@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 
 import { Repository } from './interface/Repository';
-import { UserDTO } from 'src/DTOS/User';
+import { UserDTO } from 'src/dtos/User';
 
 const prisma = new PrismaClient();
 export class UserDTORepository implements Repository<UserDTO> {

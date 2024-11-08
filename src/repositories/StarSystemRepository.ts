@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 
 import { Repository } from './interface/Repository';
-import { StarSystem } from '../DTOS/Starsystem';
+import { StarSystem } from '../dtos/Starsystem';
 
 const prisma = new PrismaClient();
 
