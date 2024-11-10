@@ -29,9 +29,11 @@ export class UserController {
     try {
       const data = req.body;
 
+      const { password } = req.body;
+
       const dto = new UserDTO(data);
 
-      dto.password = await encryptPassword(dto.password);
+      dto.password = await encryptPassword(password);
 
       const user = await this.service.createOne(dto);
 

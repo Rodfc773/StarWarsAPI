@@ -72,7 +72,7 @@ describe('Planet API Integration Tests', () => {
     expect(response.body.planet.name).toEqual(planetDataSut.name);
   });
 
-  it('Shoul update the informations about a specifc planet', async () => {
+  it('Should update the informations about a specifc planet', async () => {
     const planetDataSut = createPlanetSut();
 
     await request(app).post('/planets').send(planetDataSut);

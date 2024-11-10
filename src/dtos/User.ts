@@ -23,15 +23,26 @@ export class UserDTO {
     this._createdAt = user.createdAt;
     this._updatedAt = user.updatedAt;
   }
-
   toObject(): object {
     return {
-      id: this._id,
-      name: this._name,
-      email: this._email,
-      nickname: this._nickname,
-      createdAt: this._createdAt,
-      updateAt: this._updatedAt,
+      id: this.id,
+      name: this.name,
+      email: this.email,
+      nickname: this.nickname,
+      createdAt: this.createdAt,
+      updateAt: this.updatedAt,
+    };
+  }
+
+  fullUser() {
+    return {
+      id: this.id,
+      name: this.name,
+      email: this.email,
+      nickname: this.nickname,
+      password: this.password,
+      createdAt: this.createdAt,
+      updateAt: this.updatedAt,
     };
   }
 
@@ -56,7 +67,7 @@ export class UserDTO {
   get createdAt(): Readonly<Date> {
     return this._createdAt;
   }
-  get updateAt(): Readonly<Date> {
+  get updatedAt(): Readonly<Date> {
     return this._updatedAt;
   }
 }

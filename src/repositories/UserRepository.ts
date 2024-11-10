@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 
 import { Repository } from './interface/Repository';
-import { UserDTO } from 'src/dtos/User';
+import { UserDTO } from '../dtos/User';
 
 const prisma = new PrismaClient();
 export class UserRepository implements Repository<UserDTO> {
@@ -22,7 +22,7 @@ export class UserRepository implements Repository<UserDTO> {
   }
   async create(data: UserDTO): Promise<UserDTO> {
     const newUser = await prisma.user.create({
-      data: data,
+      data: data.fullUser(),
     });
 
     return new UserDTO(newUser);
