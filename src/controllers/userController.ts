@@ -9,7 +9,6 @@ export class UserController {
   async index(req: Request, res: Response): Promise<Response> {
     try {
       const users = await this.service.getAll();
-
       return res.status(200).json(users);
     } catch (e) {
       return res.status(500).json(e.message);
@@ -56,7 +55,7 @@ export class UserController {
 
       return res.status(200).json(user.toObject());
     } catch (e) {
-      return res.status(400).json(e.message);
+      return res.status(404).json(e.message);
     }
   }
   async delete(req: Request, res: Response): Promise<Response> {

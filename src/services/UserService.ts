@@ -37,8 +37,8 @@ export class UserService extends Service<UserDTO> {
 
     return user;
   }
-  async deleteOne(name: string): Promise<UserDTO> {
-    const user = await this.repository.delete(name);
+  async deleteOne(nickName: string): Promise<UserDTO> {
+    const user = await this.repository.delete(nickName);
 
     if (!user) throw new DataBaseError('User not found');
 

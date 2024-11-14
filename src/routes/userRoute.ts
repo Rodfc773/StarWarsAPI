@@ -14,7 +14,7 @@ const userController = new UserController(userService);
 router.get('/', userController.index.bind(userController));
 router.get('/:name', userController.show.bind(userController));
 router.post('/', userController.post.bind(userController));
-router.put('/:name', userController.update.bind(userController));
+router.put('/:nickname', userController.update.bind(userController));
 router.delete('/:name', userController.delete.bind(userController));
 
 export default router;

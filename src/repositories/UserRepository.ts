@@ -35,9 +35,9 @@ export class UserRepository implements Repository<UserDTO> {
 
     return new UserDTO(userUpdated);
   }
-  async delete(email: string): Promise<UserDTO> {
+  async delete(nickname: string): Promise<UserDTO> {
     const userDeleted = await prisma.user.delete({
-      where: { email: email },
+      where: { nickname: nickname },
     });
 
     return new UserDTO(userDeleted);
