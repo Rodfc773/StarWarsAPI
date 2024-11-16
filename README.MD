@@ -30,8 +30,6 @@
 
   - **PATCH/PUT :arrows_counterclockwise: /planets/name:** Updates the information about a specific planet.
 
-  **Obs:** For now it's only be possible to update a planet if the user provide the full data of a planet i.e Name, terraim, size, population and weather.
-
 - **Star Systems**:
 
   - **Atributtes**: Name and Description
@@ -46,4 +44,13 @@
 
   - **PATCH/PUT :arrows_counterclockwise: /starsystem/name:** Updates the information about a specific Star System.
 
-    **Obs:** For now it's only be possible to update a Star System if the user provide the full data i.e Name and Description.
+- **Users**:
+
+  - **Attributes**: name, email, password and nickname.
+  - **GET :inbox_tray: /users** : Lists all users registered.
+  - **GET :inbox_tray: /users/name** : List a specific user.
+  - **POST :outbox_tray: /users** : Create a new user.
+  - **DELETE :x: /users/name**: Delete your own user.
+  - **PATCH/PUT :arrows_counterclockwise: /users/name:** Updates the information about your own user.
+
+  **Obs:** It still wil be implemented the function to authenticate the user, so for tests purpose, the routes DELETE and PATCH/PUT are open to all users for now.
