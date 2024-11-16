@@ -12,9 +12,9 @@ const userService = new UserService(repository, userValidator);
 const userController = new UserController(userService);
 
 router.get('/', userController.index.bind(userController));
-router.get('/:name', userController.show.bind(userController));
+router.get('/:nickname', userController.show.bind(userController));
 router.post('/', userController.post.bind(userController));
 router.put('/:nickname', userController.update.bind(userController));
-router.delete('/:name', userController.delete.bind(userController));
+router.delete('/:nickname', userController.delete.bind(userController));
 
 export default router;

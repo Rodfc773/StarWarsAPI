@@ -20,7 +20,7 @@ const createSutUpdated = () => {
   return {
     name: `User-alterado`,
     email: `user123@gmail.com`,
-    nickname: `userExample123`,
+    nickname: `userExample`,
   };
 };
 describe('User Route tests', () => {
@@ -58,5 +58,17 @@ describe('User Route tests', () => {
 
     expect(response.status).toBe(200);
     expect(response.body.name).toEqual(userSutUpdated.name);
+    expect(response.body.nickname).toEqual(userSutUpdated.nickname);
+    expect(response.body.email).toEqual(userSut.email);
+  });
+
+  it('Should delete a user', async () => {
+    const userSut = createSut();
+    await request(app).post('/users').send(userSut);
+
+    const response = await request(app).delete(`/users/${userSut.nickname}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body.nickname).toEqual(userSut.nickname);
   });
 });

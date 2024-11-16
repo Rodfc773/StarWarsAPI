@@ -27,10 +27,11 @@ export class UserRepository implements Repository<UserDTO> {
 
     return new UserDTO(newUser);
   }
-  async update(data: UserDTO, UserDTOEmail: string): Promise<UserDTO> {
+  async update(data: UserDTO, userNickName: string): Promise<UserDTO> {
+    const formatedData = data.fullUser();
     const userUpdated = await prisma.user.update({
-      where: { email: UserDTOEmail },
-      data: data,
+      where: { nickname: userNickName },
+      data: formatedData,
     });
 
     return new UserDTO(userUpdated);
