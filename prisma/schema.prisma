@@ -14,14 +14,15 @@ datasource db {
 }
 
 model Planet {
-  id         String   @id @default(uuid())
-  name       String   @unique
-  terrain    String   @db.Text
+  id         String      @id @default(uuid())
+  name       String      @unique
+  terrain    String      @db.Text
   size       String
   population Int
   weather    String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  Character  Character[]
 }
 
 model StarSystem {
@@ -40,4 +41,14 @@ model User {
   nickname  String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Character {
+  id               Int    @id @default(autoincrement())
+  name             String @unique
+  race             String
+  affiliation      String
+  originPlanetId   String @unique
+  originPlanetName String
+  originPlanet     Planet @relation(fields: [originPlanetId], references: [id])
 }
