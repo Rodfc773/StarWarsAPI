@@ -22,26 +22,33 @@ export class CharactersDTO {
     this._originPlanetId = data.originPlanetId;
   }
 
-  get fullCharacter() {
+  get fullInformation() {
     return {
       id: this._id,
       name: this._name,
       affiliation: this._affiliation,
       race: this._race,
       originPlanet: this._originPlanetName,
+      originPlanetId: this._originPlanetId,
     };
   }
 
   get coreInformation() {
     return {
-      id: this._id,
       name: this._name,
       affiliation: this._affiliation,
       race: this._race,
-      originPlanet: this._originPlanetName,
+      originPlanetName: this._originPlanetName,
+      originPlanetId: this._originPlanetId,
     };
   }
 
+  get originPlanetName() {
+    return this._originPlanetName;
+  }
+  get originPlanetId() {
+    return this._originPlanetId;
+  }
   set planetId(id: string) {
     this._originPlanetId = id;
   }
