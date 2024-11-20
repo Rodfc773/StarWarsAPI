@@ -44,11 +44,12 @@ model User {
 }
 
 model Character {
-  id               Int    @id @default(autoincrement())
-  name             String @unique
-  race             String
-  affiliation      String
-  originPlanetId   String @unique
-  originPlanetName String
-  originPlanet     Planet @relation(fields: [originPlanetId], references: [id])
+  id             Int      @id @default(autoincrement())
+  name           String   @unique
+  race           String
+  affiliation    String
+  originPlanetId String   @unique
+  originPlanet   Planet   @relation(fields: [originPlanetId], references: [id])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
