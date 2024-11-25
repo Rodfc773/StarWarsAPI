@@ -48,9 +48,9 @@ export class CharRepository implements Repository<CharactersDTO> {
 
     return formattedChar;
   }
-  async create(data): Promise<CharactersDTO> {
+  async create(data: CharactersDTO): Promise<CharactersDTO> {
     const createdChar = await prisma.character.create({
-      data: data,
+      data: data.creationData,
     });
 
     const originPlanet = await prisma.planet.findUnique({

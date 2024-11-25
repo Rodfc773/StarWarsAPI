@@ -39,6 +39,15 @@ export class CharactersDTO {
       updatedAt: this._updatedAt,
     };
   }
+
+  get creationData() {
+    return {
+      name: this._name,
+      affiliation: this._affiliation,
+      race: this._race,
+      originPlanetId: this._originPlanetId,
+    };
+  }
   set originPlanet(planet: PlanetDTO) {
     this._originPlanet = planet;
   }
