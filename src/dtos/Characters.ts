@@ -6,6 +6,7 @@ export class CharactersDTO {
   private _affiliation: string;
   private _race: string;
   private _originPlanet: PlanetDTO;
+  private _originPlanetId: string;
   private _createdAt: Date;
   private _updatedAt: Date;
 
@@ -16,11 +17,13 @@ export class CharactersDTO {
     race: string;
     createdAt?: Date;
     updatedAt?: Date;
+    originPlanetId?: string;
   }) {
     this._id = data.id;
     this._name = data.name;
     this._affiliation = data.affiliation;
     this._race = data.race;
+    this._originPlanetId = data.originPlanetId;
     this._createdAt = data.createdAt;
     this._updatedAt = data.updatedAt;
   }
