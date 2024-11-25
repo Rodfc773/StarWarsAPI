@@ -29,15 +29,69 @@ export class CharRepository implements Repository<CharactersDTO> {
     return chars;
   }
   async findOne(charName: string): Promise<CharactersDTO> {
-    throw new Error('Method not implemented.');
+    const foundChar = await prisma.character.findUnique({
+      where: {
+        name: charName,
+      },
+    });
+
+    const planet = await prisma.planet.findUnique({
+      where: {
+        id: foundChar.originPlanetId,
+      },
+    });
+
+    const planetDto = new PlanetDTO(planet);
+    const formattedChar = new CharactersDTO(foundChar);
+
+    formattedChar.originPlanet = planetDto;
+
+    return formattedChar;
   }
-  async create(data: object): Promise<CharactersDTO> {
-    throw new Error('Method not implemented.');
+  async create(data): Promise<CharactersDTO> {
+    const createdChar = await prisma.character.create({
+      data: data,
+    });
+
+    const originPlanet = await prisma.planet.findUnique({
+      where: {
+        id: createdChar.originPlanetId,
+      },
+    });
+
+    const planetDto = new PlanetDTO(originPlanet);
+    const formattedChar = new CharactersDTO(createdChar);
+    formattedChar.originPlanet = planetDto;
+
+    return formattedChar;
   }
-  update(data: object, name: string): Promise<CharactersDTO> {
-    throw new Error('Method not implemented.');
+  async update(data: object, name: string): Promise<CharactersDTO> {
+    const updatedChar = await prisma.character.update({
+      where: {
+        name: name,
+      },
+      data: data,
+    });
+
+    const originPlanet = await prisma.planet.findUnique({
+      where: {
+        id: updatedChar.originPlanetId,
+      },
+    });
+
+    const planetDto = new PlanetDTO(originPlanet);
+    const formattedChar = new CharactersDTO(updatedChar);
+    formattedChar.originPlanet = planetDto;
+
+    return formattedChar;
   }
-  delete(charName: string): Promise<CharactersDTO> {
-    throw new Error('Method not implemented.');
+  async delete(charName: string): Promise<CharactersDTO> {
+    const deletedChar = await prisma.character.delete({
+      where: {
+        name: charName,
+      },
+    });
+
+    return new CharactersDTO(deletedChar);
   }
 }
