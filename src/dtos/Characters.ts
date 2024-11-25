@@ -6,19 +6,23 @@ export class CharactersDTO {
   private _affiliation: string;
   private _race: string;
   private _originPlanet: PlanetDTO;
+  private _createdAt: Date;
+  private _updatedAt: Date;
 
   constructor(data: {
     id?: number;
     name: string;
     affiliation: string;
     race: string;
-    originPlanet: PlanetDTO;
+    createdAt?: Date;
+    updatedAt?: Date;
   }) {
     this._id = data.id;
     this._name = data.name;
     this._affiliation = data.affiliation;
     this._race = data.race;
-    this._originPlanet = data.originPlanet;
+    this._createdAt = data.createdAt;
+    this._updatedAt = data.updatedAt;
   }
 
   get fullInformation() {
@@ -28,6 +32,11 @@ export class CharactersDTO {
       affiliation: this._affiliation,
       race: this._race,
       originPlanet: this._originPlanet,
+      createdAt: this._createdAt,
+      updatedAt: this._updatedAt,
     };
+  }
+  set originPlanet(planet: PlanetDTO) {
+    this._originPlanet = planet;
   }
 }
