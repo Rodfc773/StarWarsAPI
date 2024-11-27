@@ -43,3 +43,14 @@ export class UserDataValidator extends Validator {
     return validator.isEmail(email);
   }
 }
+
+export class CharacterDataValidator extends Validator {
+  validationData(data): boolean {
+    if (!data.name) return false;
+    if (!data.affiliation) return false;
+    if (!data.race) return false;
+    if (!data.originPlaneName) return false;
+
+    return true;
+  }
+}

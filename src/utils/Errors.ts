@@ -18,6 +18,13 @@ export class UserMissingDataError extends Error {
   }
 }
 
+export class CharacterMissingDataError extends Error {
+  constructor(public message: string) {
+    super(message);
+    this.name = 'CharacterMissingDataError';
+  }
+}
+
 export class PlanetNotFound extends Error {
   constructor(public message: string) {
     super(message);

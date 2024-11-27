@@ -1,8 +1,14 @@
-import { CharactersDTO } from 'src/dtos/Characters';
+import { CharactersDTO } from '../dtos/Characters';
 import { Service } from './interfaces/Service';
-import { DataBaseError } from 'src/utils/Errors';
+import { CharacterMissingDataError, DataBaseError } from '../utils/Errors';
+import { CharacterDataValidator } from '../utils/Validations';
 
 export class CharService extends Service<CharactersDTO> {
+  constructor(repository: CharactersDTO, validator: CharacterDataValidator) {
+    super();
+    this.repository = repository;
+    this.validator = validator;
+  }
   async getAll(): Promise<CharactersDTO[]> {
     const chars = await this.repository.findall();
 
@@ -18,6 +24,9 @@ export class CharService extends Service<CharactersDTO> {
   }
 
   async createOne(data: CharactersDTO): Promise<CharactersDTO> {
+    if (!this.validator.validationData(data))
+      throw new CharacterMissingDataError('There are missing fields');
+
     const createdChar = await this.repository.createOne(data);
 
     return createdChar;
