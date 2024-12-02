@@ -42,4 +42,15 @@ describe('Star System API Integration tests', () => {
     expect(response.status).toBe(201);
     expect(response.body).toEqual(expect.objectContaining(sut));
   });
+
+  it('Should delete a Star System from the database', async () => {
+    const sut = createStarSystemSut();
+
+    await request(app).post('/starsystem').send(sut);
+
+    const response = await request(app).delete(`/starsystem/${sut.name}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(expect.objectContaining(sut));
+  });
 });
