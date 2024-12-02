@@ -49,7 +49,7 @@ export class CharacterDataValidator extends Validator {
     if (!data.name) return false;
     if (!data.affiliation) return false;
     if (!data.race) return false;
-    if (!data.originPlaneName) return false;
+    if (!data.originId) return false;
 
     return true;
   }

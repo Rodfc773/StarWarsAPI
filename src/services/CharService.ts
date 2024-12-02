@@ -1,10 +1,11 @@
 import { CharactersDTO } from '../dtos/Characters';
 import { Service } from './interfaces/Service';
 import { CharacterMissingDataError, DataBaseError } from '../utils/Errors';
-import { CharacterDataValidator } from '../utils/Validations';
+import { Validator } from '../utils/Validations';
+import { Repository } from 'src/repositories/interface/Repository';
 
 export class CharService extends Service<CharactersDTO> {
-  constructor(repository: CharactersDTO, validator: CharacterDataValidator) {
+  constructor(repository: Repository<CharactersDTO>, validator: Validator) {
     super();
     this.repository = repository;
     this.validator = validator;
